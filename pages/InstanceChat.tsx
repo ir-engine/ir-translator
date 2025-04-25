@@ -153,13 +153,18 @@ function NewMessage() {
           })
         )
       }
-      const translation = await API.instance
-        .service('gemini-translator')
-        .create(composedMessage.value, { target_language: selectedLang.get(NO_PROXY) as any })
-      console.log(translation)
+      let message = composedMessage.value
+      try {
+        const translation = await API.instance
+          .service('gemini-translator')
+          .create(composedMessage.value, { target_language: selectedLang.get(NO_PROXY) as any })
+        const message = translation.translated_text
+      } catch (err) {
+        console.error(err)
+      }
       messageMutation
         .create({
-          text: composedMessage.value,
+          text: message,
           channelId: targetChannelId.value
         })
         .then((message) => {
