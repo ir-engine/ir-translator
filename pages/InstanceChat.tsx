@@ -31,11 +31,11 @@ import LocationIconButton from '@ir-engine/client-core/src/user/components/Locat
 import ProfileMenu from '@ir-engine/client-core/src/user/menus/ProfileMenu'
 import { AuthState } from '@ir-engine/client-core/src/user/services/AuthService'
 import { ReportUserState } from '@ir-engine/client-core/src/util/ReportUserState'
-import { useFind, useMutation } from '@ir-engine/common'
+import { API, useFind, useMutation } from '@ir-engine/common'
 import { InstanceID, MessageType, messagePath } from '@ir-engine/common/src/schema.type.module'
 import { useTouchOutside } from '@ir-engine/common/src/utils/useClickOutside'
 import { AudioEffectPlayer } from '@ir-engine/engine/src/audio/systems/MediaSystem'
-import { State, UserID, dispatchAction, useHookstate, useMutableState } from '@ir-engine/hyperflux'
+import { NO_PROXY, State, UserID, dispatchAction, useHookstate, useMutableState } from '@ir-engine/hyperflux'
 import { NetworkState } from '@ir-engine/network'
 import { PeerMediaChannelState } from '@ir-engine/network/src/media/PeerMediaChannelState'
 import { isMobile } from '@ir-engine/spatial/src/common/functions/isMobile'
@@ -123,7 +123,7 @@ function NewMessage() {
   const messageMutation = useMutation(messagePath, false)
   const { messages, setNewMessage, isChatOpen } = useInstanceChatMessages()
   const inputRef = useRef<HTMLInputElement>(null)
-  const selectedLang = useHookstate('ENG')
+  const selectedLang = useHookstate('en')
 
   const handleComposedMessage = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const message = event.target.value
@@ -143,7 +143,7 @@ function NewMessage() {
     composedMessage.set(message)
   }
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const instanceId = NetworkState.worldNetwork.id as InstanceID
     if (composedMessage.value.trim().length && instanceId) {
       if (usersTyping) {
@@ -153,6 +153,10 @@ function NewMessage() {
           })
         )
       }
+      const translation = await API.instance
+        .service('gemini-translator')
+        .create(composedMessage.value, { target_language: selectedLang.get(NO_PROXY) as any })
+      console.log(translation)
       messageMutation
         .create({
           text: composedMessage.value,
@@ -191,7 +195,7 @@ function NewMessage() {
           <button
             className="ml-5 flex h-6 items-center justify-center rounded bg-white px-2 text-xs font-bold text-black hover:bg-gray-100 lg:ml-8"
             onClick={() => {
-              const langs = ['ENG', 'FR', 'RUS']
+              const langs = ['en', 'fr', 'ru']
               const currentIndex = langs.indexOf(selectedLang.value)
               const nextIndex = (currentIndex + 1) % langs.length
               selectedLang.set(langs[nextIndex])

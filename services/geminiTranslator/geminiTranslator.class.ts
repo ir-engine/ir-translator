@@ -1,9 +1,16 @@
-import { BadRequest } from '@feathersjs/errors'
 import { Application, ServiceInterface } from '@feathersjs/feathers'
 
 export interface GeminiTranslatorParams {
-  audio: Blob
+  target_language: 'en' | 'fr' | 'ru'
 }
+
+// type GeminiTranslatorType = {
+//   detected_language: string,
+//   is_target_language: boolean,
+//   translated_text: string,
+//   original_text: string,
+//   target_language: string
+// }
 
 export class GeminiTranslatorService implements ServiceInterface<string[], any, GeminiTranslatorParams> {
   app: Application
@@ -13,12 +20,20 @@ export class GeminiTranslatorService implements ServiceInterface<string[], any, 
   }
 
   async create(data: any, params: GeminiTranslatorParams) {
-    if (!params.audio || !Array.isArray(params.audio)) {
-      throw new BadRequest('No files provided or invalid files format')
-    }
+    const req = await fetch('http://localhost:3035/translate-text', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: data,
+        target_language: params.target_language
+      })
+    })
+    const translation = JSON.parse((await req.text()).replace('```json\n', '').replace('```', ''))
 
     // input blob
     // output text
-    return data
+    return translation
   }
 }
