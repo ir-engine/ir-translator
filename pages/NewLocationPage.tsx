@@ -29,7 +29,7 @@ import { useParams } from 'react-router-dom'
 import { useLoadLocation, useLoadScene } from '@ir-engine/client-core/src/components/World/LoadLocationScene'
 import { AuthService, AuthState } from '@ir-engine/client-core/src/user/services/AuthService'
 import { getMutableState, useHookstate, useMutableState } from '@ir-engine/hyperflux'
-import { ViewerInteractions } from '../components/ViewerInteractions'
+import { NewViewerInteractions } from './NewViewerInteraction'
 
 import '@ir-engine/client-core/src/util/GlobalStyle.css'
 
@@ -93,7 +93,7 @@ const NewLocationPage = ({ online }: Props) => {
 
   return (
     <>
-      <ViewerInteractions />
+      <NewViewerInteractions />
       {isAuthenticated && <CheckBanned />}
     </>
   )
