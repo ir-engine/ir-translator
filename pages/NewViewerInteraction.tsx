@@ -30,6 +30,7 @@ import UserMenus from '@ir-engine/client-core/src/user/menus'
 import { EngineState } from '@ir-engine/ecs'
 import { getMutableState, NO_PROXY, useHookstate, useMutableState } from '@ir-engine/hyperflux'
 import { isMobile } from '@ir-engine/spatial/src/common/functions/isMobile'
+import { Globe01Lg } from '@ir-engine/ui/src/icons'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { ModalState } from '../../common/services/ModalState'
@@ -44,9 +45,8 @@ import { Fullscreen } from '../Fullscreen'
 import { MediaIconsBox } from '../MediaIconsBox'
 import { XRLoading } from '../XRLoading'
 import ScreenRotateImage from './screen-rotate.svg'
-import { Globe01Lg } from '@ir-engine/ui/src/icons'
 
-export const ViewerInteractions = () => {
+export const NewViewerInteractions = () => {
   const isPortrait = useHookstate(window.matchMedia('(orientation: portrait)').matches)
   const userID = useHookstate(getMutableState(EngineState).userID).value
   const loadingScreenVisible = useHookstate(getMutableState(LoadingSystemState).loadingScreenVisible).value
@@ -90,13 +90,17 @@ export const ViewerInteractions = () => {
     <div id="location-container" ref={locationContainer} className="fixed h-dvh w-full p-6">
       <div className="pointer-events-auto absolute left-0 top-0 h-fit w-full pt-[inherit]">
         <MediaIconsBox />
-        <div className="pointer-events-auto z-10 flex w-full items-center justify-center mt-2">
-          <div className={`relative ${translationState.enabled.value ? 'after:absolute after:inset-0 after:rounded-full after:border-2 after:border-blue-500' : ''}`}>
+        <div className="pointer-events-auto z-10 mt-2 flex w-full items-center justify-center">
+          <div
+            className={`relative ${
+              translationState.enabled.value
+                ? 'after:absolute after:inset-0 after:rounded-full after:border-2 after:border-blue-500'
+                : ''
+            }`}
+          >
             <LocationIconButton
               tooltip={{
-                title: translationState.enabled.value
-                  ? t('user:menu.translateDisable')
-                  : t('user:menu.translate')
+                title: translationState.enabled.value ? t('user:menu.translateDisable') : t('user:menu.translate')
               }}
               icon={Globe01Lg}
               id="TranslateButton"
