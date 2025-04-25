@@ -23,21 +23,17 @@ All portions of the code written by the Infinite Reality Engine team are Copyrig
 Infinite Reality Engine. All Rights Reserved.
 */
 
-import type { ProjectConfigInterface } from '@ir-engine/projects/ProjectConfigInterface'
+import { createEngine } from '@ir-engine/ecs/src/Engine'
+import { HyperFlux } from '@ir-engine/hyperflux'
+import { startTimer } from '@ir-engine/spatial/src/startTimer'
+import React from 'react'
 
-const config: ProjectConfigInterface = {
-  onEvent: undefined,
-  thumbnail: '/static/ir-engine_thumbnail.jpg',
-  routes: {
-    '/translator': {
-      component: () => import('./pages/location'),
-      props: {
-        exact: true
-      }
-    }
-  },
-  services: './services/services.ts',
-  databaseSeed: undefined
+import * as ECS from '@ir-engine/ecs'
+globalThis.ECS = ECS
+
+createEngine(HyperFlux.store)
+startTimer()
+
+export default function ({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
 }
-
-export default config

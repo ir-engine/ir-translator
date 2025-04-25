@@ -25,26 +25,20 @@ Infinite Reality Engine. All Rights Reserved.
 
 import React, { useLayoutEffect, useRef } from 'react'
 
-import { TouchGamepad } from '@ir-engine/client-core/src/common/components/TouchGamepad'
+import { ModalState } from '@ir-engine/client-core/src/common/services/ModalState'
+import { MediaIconsBox } from '@ir-engine/client-core/src/components/MediaIconsBox'
+import { LoadingSystemState } from '@ir-engine/client-core/src/systems/state/LoadingState'
+import LocationIconButton from '@ir-engine/client-core/src/user/components/LocationIconButton'
+import InstanceChat from '@ir-engine/client-core/src/user/InstanceChat'
 import UserMenus from '@ir-engine/client-core/src/user/menus'
+import { VideoWindows } from '@ir-engine/client-core/src/user/VideoWindows'
+import { ViewerMenuState } from '@ir-engine/client-core/src/util/ViewerMenuState'
 import { EngineState } from '@ir-engine/ecs'
 import { getMutableState, NO_PROXY, useHookstate, useMutableState } from '@ir-engine/hyperflux'
 import { isMobile } from '@ir-engine/spatial/src/common/functions/isMobile'
-import { Globe01Lg } from '@ir-engine/ui/src/icons'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
-import { ModalState } from '../../common/services/ModalState'
-import { LoadingSystemState } from '../../systems/state/LoadingState'
-import LocationIconButton from '../../user/components/LocationIconButton'
-import InstanceChat from '../../user/InstanceChat'
-import { VideoWindows } from '../../user/VideoWindows'
-import { TranslationState } from '../../util/TranslationState'
-import { ViewerMenuState } from '../../util/ViewerMenuState'
-import { ARPlacement } from '../ARPlacement'
-import { Fullscreen } from '../Fullscreen'
-import { MediaIconsBox } from '../MediaIconsBox'
-import { XRLoading } from '../XRLoading'
-import ScreenRotateImage from './screen-rotate.svg'
+import ScreenRotateImage from '../assets/screen-rotate.svg'
 
 export const NewViewerInteractions = () => {
   const isPortrait = useHookstate(window.matchMedia('(orientation: portrait)').matches)
@@ -53,7 +47,6 @@ export const NewViewerInteractions = () => {
   const { t } = useTranslation()
   const externalInjectedMenus = useMutableState(ViewerMenuState).externalInjectedMenus.get(NO_PROXY)
   const locationContainer = useRef<HTMLDivElement>(null)
-  const translationState = useMutableState(TranslationState)
 
   useLayoutEffect(() => {
     if (locationContainer.current) locationContainer.current.style.opacity = '0'
@@ -90,29 +83,6 @@ export const NewViewerInteractions = () => {
     <div id="location-container" ref={locationContainer} className="fixed h-dvh w-full p-6">
       <div className="pointer-events-auto absolute left-0 top-0 h-fit w-full pt-[inherit]">
         <MediaIconsBox />
-        <div className="pointer-events-auto z-10 mt-2 flex w-full items-center justify-center">
-          <div
-            className={`relative ${
-              translationState.enabled.value
-                ? 'after:absolute after:inset-0 after:rounded-full after:border-2 after:border-blue-500'
-                : ''
-            }`}
-          >
-            <LocationIconButton
-              tooltip={{
-                title: translationState.enabled.value ? t('user:menu.translateDisable') : t('user:menu.translate')
-              }}
-              icon={Globe01Lg}
-              id="TranslateButton"
-              onClick={() => {
-                // Toggle translation state using the global state
-                TranslationState.toggleTranslation()
-                console.log('Translation ' + (translationState.enabled.value ? 'disabled' : 'enabled'))
-                // Here you would implement the actual translation logic
-              }}
-            />
-          </div>
-        </div>
       </div>
 
       <div className="pointer-events-auto absolute left-0 top-0 select-none pl-[inherit] pt-[inherit]">
@@ -126,10 +96,6 @@ export const NewViewerInteractions = () => {
         )}
       >
         <UserMenus />
-      </div>
-
-      <div className="pointer-events-auto absolute bottom-0 left-0 pb-[inherit] pl-[inherit]">
-        {!isMobile && <Fullscreen />}
       </div>
 
       <div className="pointer-events-auto absolute bottom-0 right-0 pb-[inherit] pr-[inherit]">
@@ -146,11 +112,6 @@ export const NewViewerInteractions = () => {
           />
         ))}
       </div>
-
-      <ARPlacement />
-      <XRLoading />
-
-      <TouchGamepad />
     </div>
   )
 }

@@ -32,18 +32,17 @@ import { getMutableState, useHookstate, useMutableState } from '@ir-engine/hyper
 import { NewViewerInteractions } from './NewViewerInteraction'
 
 import '@ir-engine/client-core/src/util/GlobalStyle.css'
+import '@ir-engine/client-core/src/world/LocationModule'
 
-import './LocationModule'
-
+import { NotificationService } from '@ir-engine/client-core/src/common/services/NotificationService'
+import { ThemeState } from '@ir-engine/client-core/src/common/services/ThemeService'
+import { useNetwork } from '@ir-engine/client-core/src/components/World/EngineHooks'
+import { useUserBannedCheck } from '@ir-engine/client-core/src/hooks/useUserBanned'
+import { LocationService } from '@ir-engine/client-core/src/social/services/LocationService'
+import { LoadingUISystemState } from '@ir-engine/client-core/src/systems/LoadingUISystem'
+import { clientContextParams } from '@ir-engine/client-core/src/util/ClientContextState'
 import multiLogger from '@ir-engine/common/src/logger'
 import { useTranslation } from 'react-i18next'
-import { NotificationService } from '../common/services/NotificationService'
-import { ThemeState } from '../common/services/ThemeService'
-import { useNetwork } from '../components/World/EngineHooks'
-import { useUserBannedCheck } from '../hooks/useUserBanned'
-import { LocationService } from '../social/services/LocationService'
-import { LoadingUISystemState } from '../systems/LoadingUISystem'
-import { clientContextParams } from '../util/ClientContextState'
 
 const logger = multiLogger.child({ component: 'system:location', modifier: clientContextParams })
 

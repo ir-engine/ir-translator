@@ -23,12 +23,6 @@ All portions of the code written by the Infinite Reality Engine team are Copyrig
 Infinite Reality Engine. All Rights Reserved.
 */
 
-import { t } from 'i18next'
-import React, { Suspense, useRef } from 'react'
-import { Route, Routes } from 'react-router-dom'
-
-import '../../engine'
-
 import Debug from '@ir-engine/client-core/src/components/Debug'
 import { useEngineInjection } from '@ir-engine/client-core/src/components/World/EngineHooks'
 import { useBrowserCheck } from '@ir-engine/client-core/src/hooks/useUnsupported'
@@ -37,7 +31,11 @@ import { getMutableState, useHookstate } from '@ir-engine/hyperflux'
 import { useSpatialEngine } from '@ir-engine/spatial/src/initializeEngine'
 import { useEngineCanvas } from '@ir-engine/spatial/src/renderer/functions/useEngineCanvas'
 import LoadingView from '@ir-engine/ui/src/primitives/tailwind/LoadingView'
-import '../styles.scss'
+import { t } from 'i18next'
+import React, { Suspense, useRef } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import './assets/styles.scss'
+import './engine'
 import NewLocationPage from './NewLocationPage'
 
 const LocationRoutes = () => {
@@ -47,6 +45,7 @@ const LocationRoutes = () => {
   useSpatialEngine()
   useEngineCanvas(ref)
   useBrowserCheck()
+  console.log('RAMI ROCKS')
 
   const projectsLoaded = useEngineInjection()
 
