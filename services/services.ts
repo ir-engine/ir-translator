@@ -1,5 +1,3 @@
-import geminiTranslator from "./geminiTranslator/geminiTranslator";
+import geminiTranslator from './geminiTranslator/geminiTranslator'
 
-export default [
-  geminiTranslator
-]
+export default [geminiTranslator]

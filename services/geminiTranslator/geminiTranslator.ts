@@ -2,10 +2,10 @@
 import { Application } from '@ir-engine/server-core/declarations'
 import config from '@ir-engine/server-core/src/appconfig'
 
-import { geminiTranslatorMethods, geminiTranslatorPath } from './geminiTranslator.schema'
 import { GeminiTranslatorService } from './geminiTranslator.class'
 import geminiTranslatorDocs from './geminiTranslator.docs'
 import hooks from './geminiTranslator.hooks'
+import { geminiTranslatorMethods, geminiTranslatorPath } from './geminiTranslator.schema'
 
 declare module '@ir-engine/common/declarations' {
   interface ServiceTypes {

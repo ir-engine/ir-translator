@@ -26,7 +26,6 @@ Infinite Reality Engine. All Rights Reserved.
 import React, { useLayoutEffect, useRef } from 'react'
 
 import { ModalState } from '@ir-engine/client-core/src/common/services/ModalState'
-import { MediaIconsBox } from '@ir-engine/client-core/src/components/MediaIconsBox'
 import { LoadingSystemState } from '@ir-engine/client-core/src/systems/state/LoadingState'
 import LocationIconButton from '@ir-engine/client-core/src/user/components/LocationIconButton'
 import InstanceChat from '@ir-engine/client-core/src/user/InstanceChat'
@@ -36,6 +35,7 @@ import { ViewerMenuState } from '@ir-engine/client-core/src/util/ViewerMenuState
 import { EngineState } from '@ir-engine/ecs'
 import { getMutableState, NO_PROXY, useHookstate, useMutableState } from '@ir-engine/hyperflux'
 import { isMobile } from '@ir-engine/spatial/src/common/functions/isMobile'
+import { Microphone01Md } from '@ir-engine/ui/src/icons'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import ScreenRotateImage from '../assets/screen-rotate.svg'
@@ -81,8 +81,15 @@ export const NewViewerInteractions = () => {
 
   return (
     <div id="location-container" ref={locationContainer} className="fixed h-dvh w-full p-6">
-      <div className="pointer-events-auto absolute left-0 top-0 h-fit w-full pt-[inherit]">
-        <MediaIconsBox />
+      <div className="pointer-events-auto ml-[300px] h-fit w-full pt-[inherit]">
+        <LocationIconButton
+          id="FlipVideo"
+          tooltip={{
+            title: t('user:menu.cycleCamera')
+          }}
+          onClick={() => console.log('start')}
+          icon={Microphone01Md}
+        ></LocationIconButton>
       </div>
 
       <div className="pointer-events-auto absolute left-0 top-0 select-none pl-[inherit] pt-[inherit]">

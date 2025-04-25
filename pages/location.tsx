@@ -34,7 +34,7 @@ import LoadingView from '@ir-engine/ui/src/primitives/tailwind/LoadingView'
 import { t } from 'i18next'
 import React, { Suspense, useRef } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import './assets/styles.scss'
+import '../assets/styles.scss'
 import './engine'
 import NewLocationPage from './NewLocationPage'
 
