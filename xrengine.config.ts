@@ -28,8 +28,15 @@ import type { ProjectConfigInterface } from '@ir-engine/projects/ProjectConfigIn
 const config: ProjectConfigInterface = {
   onEvent: undefined,
   thumbnail: '/static/ir-engine_thumbnail.jpg',
-  routes: {},
-  services: undefined,
+  routes: {
+    '/': {
+      component: () => import('./pages/location.tsx'),
+      props: {
+        exact: true
+      }
+    }
+  },
+  services: './services/services.ts',
   databaseSeed: undefined
 }
 
