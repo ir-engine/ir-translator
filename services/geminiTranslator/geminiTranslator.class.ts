@@ -16,6 +16,9 @@ export class GeminiTranslatorService implements ServiceInterface<string[], any, 
     if (!params.audio || !Array.isArray(params.audio)) {
       throw new BadRequest('No files provided or invalid files format')
     }
+    
+    // input blob
+    // output text
     return data
   }
 }
