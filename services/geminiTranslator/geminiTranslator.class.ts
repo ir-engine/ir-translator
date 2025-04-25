@@ -1,8 +1,6 @@
 import { Application, ServiceInterface } from '@feathersjs/feathers'
 
-export interface GeminiTranslatorParams {
-  target_language: 'en' | 'fr' | 'ru'
-}
+export interface GeminiTranslatorParams {}
 
 // type GeminiTranslatorType = {
 //   detected_language: string,
@@ -26,8 +24,8 @@ export class GeminiTranslatorService implements ServiceInterface<string[], any, 
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        text: data,
-        target_language: params.target_language
+        text: data.text,
+        target_language: data.target_language
       })
     })
     const translation = JSON.parse((await req.text()).replace('```json\n', '').replace('```', ''))

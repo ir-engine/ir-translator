@@ -157,8 +157,8 @@ function NewMessage() {
       try {
         const translation = await API.instance
           .service('gemini-translator')
-          .create(composedMessage.value, { target_language: selectedLang.get(NO_PROXY) as any })
-        const message = translation.translated_text
+          .create({ text: composedMessage.value, target_language: selectedLang.get(NO_PROXY) as any })
+        message = translation.translated_text
       } catch (err) {
         console.error(err)
       }
